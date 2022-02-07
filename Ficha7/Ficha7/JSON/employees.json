@@ -1,0 +1,34 @@
+{
+  "EmployeesList": [
+    {
+      "UserId": 1,
+      "JobTitle": "Developer",
+      "FirstName": "Krish",
+      "LastName": "Lee",
+      "EmployeeCode": "E1",
+      "Region": "CA",
+      "PhoneNumber": "123456",
+      "EmailAddress": "krish.lee@learningcontainer.com"
+    },
+    {
+      "UserId": 2,
+      "JobTitle": "Developer",
+      "FirstName": "Devid",
+      "LastName": "Rome",
+      "EmployeeCode": "E2",
+      "Region": "CA",
+      "PhoneNumber": "1111111",
+      "EmailAddress": "devid.rome@learningcontainer.com"
+    },
+    {
+      "UserId": 3,
+      "JobTitle": "Program Directory",
+      "FirstName": "tin",
+      "LastName": "jonson",
+      "EmployeeCode": "E3",
+      "Region": "TX",
+      "PhoneNumber": "2222222",
+      "EmailAddress": "tin.jonson@learningcontainer.com"
+    }
+  ]
+}
