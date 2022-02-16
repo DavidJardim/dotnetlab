@@ -1,0 +1,28 @@
+{
+  "PersonList": [
+    {
+      "FirstName": "Pedro",
+      "Jedi": false,
+      "LastName": "Lopes",
+      "Profession": "Teacher",
+      "Age": 22,
+      "Id": 1
+    },
+    {
+      "FirstName": "Ana",
+      "LastName": "Matos",
+      "Profession": "Driver",
+      "Age": 28,
+      "Id": 2,
+      "Jedi": false
+    },
+    {
+      "FirstName": "Marco",
+      "LastName": "Gouda",
+      "Profession": "Student",
+      "Age": 17,
+      "Id": 3,
+      "Jedi": true
+    }
+  ]
+}

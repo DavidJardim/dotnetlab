@@ -130,7 +130,7 @@ app.MapDelete("/employees/{id}", (int id) =>
 app.MapGet("/employees/{id:int}", (int id) =>
 {
     Employee emp = employees.EmployeesList.Find(e => e.UserId == id);
-    if(emp == null)
+    if (emp == null)
     {
         return Results.NotFound(String.Format("ID: {0} not found", id));
     }
@@ -138,7 +138,6 @@ app.MapGet("/employees/{id:int}", (int id) =>
     {
         return Results.Ok(emp);
     }
-
 });
 
 /// <summary>
@@ -171,7 +170,7 @@ app.MapPut("/employees/{id}", (int id, Employee employeeFromBody) => {
 app.MapGet("/employees/{region}", (string region) =>
 {
     List<Employee> emps = employees.EmployeesList.FindAll(e => e.Region == region);
-    if (emp == null)
+    if (emps.Count == 0)
     {
         return Results.NotFound(String.Format("Region: {0} not found", region));
     }

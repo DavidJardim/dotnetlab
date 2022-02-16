@@ -1,29 +1,29 @@
 ﻿using Ficha4;
 
-public class Triangle
+public class Triangle : Shape
 {
-    private Point a;
+    
     private Point b;
     private Point c;
 
     public Triangle()
     {
-        this.a = new Point();
+        this.position = new Point();
         this.b = new Point();
         this.c = new Point();
     }
 
     public Triangle(Point a, Point b, Point c)
     {
-        this.a = a;
+        this.position = a;
         this.b = b;
         this.c = c;
     }
 
     public Point A
     {
-        get { return a; }
-        set { a = value; }
+        get { return position; }
+        set { position = value; }
     }
     public Point B
     {
@@ -38,16 +38,28 @@ public class Triangle
 
     public double Base()
     {
-        return a.DistanceTo(b);
+        return position.DistanceTo(b);
     }
 
     public double Height()
     {
-        return a.DistanceTo(c);
+        return position.DistanceTo(c);
     }
 
-    public double Area()
+    public override double Area()
     {
         return (Base() * Height()) / 2;
+    }
+
+    public override double Perimeter()
+    {
+       /* double l1 = position.DistanceTo(b);
+        double l2 = position.DistanceTo(c);
+        double l3 = b.DistanceTo(c);
+
+        double perimeter = l1 + l2 + l3;
+        return perimeter;*/
+
+        return position.DistanceTo(b) + position.DistanceTo(c) + b.DistanceTo(c);
     }
 }
