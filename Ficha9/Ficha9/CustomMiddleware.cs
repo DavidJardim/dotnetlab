@@ -13,18 +13,12 @@ namespace Ficha9
 
 
         public async Task InvokeAsync(HttpContext context)
-        {
-
-            context.Request
-            
-
+        {                        
             // Call the next delegate/middleware in the pipeline.
             Debug.WriteLine("BEFORE: " + context.Request.Path + ", " + context.Request.Method + ", " +  DateTime.Now);
             await next(context);
             Debug.WriteLine("AFTER CM");
         }
-
-
     }
 
     public static class CustomMiddlewareExtensions

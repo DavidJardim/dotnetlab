@@ -56,4 +56,6 @@ app.MapGet("/weatherforecast/{id:int}", (HttpContext context, int id) =>
 .WithName("GetWeatherForecastId");
 
 
+app.UseCustomMiddleware();
+
 app.Run();
