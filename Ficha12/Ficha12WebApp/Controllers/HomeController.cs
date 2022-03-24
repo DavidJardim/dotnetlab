@@ -14,13 +14,13 @@ namespace Ficha12WebApp.Controllers
             this.service = service;
         }
 
-        /*public IActionResult Index()
+        public IActionResult Index()
         {
             var books = service.GetAll();
             return View(new BooksViewModel { Books = books });
-        }*/
+        }
 
-        public IActionResult Index()
+        /*public IActionResult Index()
         {
             IEnumerable<Book> books = null;
             using (var client = new HttpClient())
@@ -44,7 +44,7 @@ namespace Ficha12WebApp.Controllers
                 }
             }
             return View(new BooksViewModel { Books = books });
-        }
+        }*/
 
 
         public IActionResult Privacy()
@@ -77,6 +77,21 @@ namespace Ficha12WebApp.Controllers
             else {
                 return RedirectToAction(nameof(Error));
             }            
+        }
+
+   
+        public IActionResult Delete(string isbn)
+        {
+            var book = service.GetByISBN(isbn);
+            if(book is not null)
+            {
+                service.DeleteByISBN(isbn);
+                return RedirectToAction(nameof(Index));
+            }
+            else {
+                return RedirectToAction(nameof(Error));
+            }                           
+            
         }
     }
 }
