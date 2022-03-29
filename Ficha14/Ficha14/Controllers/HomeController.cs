@@ -35,8 +35,15 @@ namespace Ficha14.Controllers
 
         public IActionResult SignUp()
         {
+
+            string token = HttpContext.Session.GetString("Token");
+            var id = tokenService.GetJWTTokenClaim(token);
+
+            ViewBag.Id = id;
+         
             return View();
         }
+
 
         [AllowAnonymous]
         [HttpPost]

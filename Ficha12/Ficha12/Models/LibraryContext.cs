@@ -15,8 +15,11 @@ namespace Ficha12.Models
         
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL("server=localhost;database=library;" +
-                "user=root;password=password");
+            //optionsBuilder.UseMySQL("server=localhost;database=library;" +
+            //    "user=root;password=password");
+
+            optionsBuilder.UseMySQL("server=req-twitter.mysql.database.azure.com;database=library;" +
+              "user=djardim@req-twitter;password=UPJ5W8vkuvx4vDe");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

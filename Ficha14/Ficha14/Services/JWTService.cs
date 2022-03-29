@@ -2,6 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+
 using System.Text;
 
 public class JWTService : IJWTService
@@ -36,7 +37,7 @@ public class JWTService : IJWTService
 
         try
         {
-            tokenHandler.ValidateToken(token,
+            ClaimsPrincipal principal = tokenHandler.ValidateToken(token,
             new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
@@ -47,12 +48,29 @@ public class JWTService : IJWTService
                 IssuerSigningKey = mySecurityKey,
             }, 
             // passed by reference
-            out SecurityToken validatedToken);
+            out SecurityToken validatedToken);            
+
         }
         catch
         {
             return false;
         }
         return true;
+    }
+
+    public string GetJWTTokenClaim(string token)
+    {
+        try
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var securityToken = (JwtSecurityToken)tokenHandler.ReadToken(token);
+            var claimValue = securityToken.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+            return claimValue;
+        }
+        catch (Exception)
+        {
+            
+            return null;
+        }
     }
 }
