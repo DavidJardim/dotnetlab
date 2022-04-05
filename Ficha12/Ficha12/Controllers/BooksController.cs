@@ -1,5 +1,4 @@
 ﻿using Ficha12.Models;
-using Ficha12.Services;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,6 +17,12 @@ namespace Ficha12.Controllers
         }
 
         // GET: api/<BooksController>
+        [HttpGet("{isbn}/publishers", Name = "GetPublishers")]
+        public async Task<Publisher> GetPublisherAsync(string isbn)
+        {
+            return await service.GetPublisherAsync(isbn);
+        }
+
         [HttpGet]
         public IEnumerable<Book> Get()
         {
@@ -26,9 +31,9 @@ namespace Ficha12.Controllers
 
         // GET api/<BooksController>/5
         [HttpGet("{isbn}", Name = "GetByISBN")]
-        public  IActionResult Get(string isbn)
+        public async Task<IActionResult> GetAsync(string isbn)
         {
-            Book? book = service.GetByISBN(isbn);
+            Book? book = await service.GetByISBNAsync(isbn);
             if (book == null)
             {
                 return NotFound();
@@ -41,11 +46,11 @@ namespace Ficha12.Controllers
 
         // POST api/<BooksController>
         [HttpPost]
-        public IActionResult Post([FromBody] Book book)
+        public async Task<IActionResult> PostAsync([FromBody] Book book)
         {
             if (book != null)
             {
-                Book newBook = service.Create(book);
+                Book newBook = await service.CreateAsync(book);
                 return CreatedAtRoute("GetByISBN", new { isbn = newBook.ISBN}, newBook);
             }
             else
@@ -56,12 +61,12 @@ namespace Ficha12.Controllers
 
         // PUT api/<BooksController>/5
         [HttpPut("{isbn}")]
-        public IActionResult Put(string isbn, [FromBody] Book book)
+        public async Task<IActionResult> PutAsync(string isbn, [FromBody] Book book)
         {
-            var bookToUpdate = service.GetByISBN(isbn);
+            var bookToUpdate = await service.GetByISBNAsync(isbn);
             if (book is not null && bookToUpdate is not null)
             {
-                service.Update(isbn, book);
+                service.UpdateAsync(isbn, book);
                 return Ok();
             }
             else
@@ -72,12 +77,12 @@ namespace Ficha12.Controllers
         //https://localhost:7240/api/Books/978-0544003411/publisherId?publisherId=2
         // PATCH api/<BooksController>/5
         [HttpPatch("{isbn}/publisherId")]
-        public IActionResult Patch(string isbn, int publisherId)
+        public async Task<IActionResult> PatchAsync(string isbn, int publisherId)
         {
-            var bookToUpdate = service.GetByISBN(isbn);
+            var bookToUpdate = await service.GetByISBNAsync(isbn);
             if (bookToUpdate is not null)
             {
-                service.UpdatePublisher(isbn, publisherId);
+                await service.UpdatePublisherAsync(isbn, publisherId);
                 return Ok();
             }
             else
@@ -86,15 +91,24 @@ namespace Ficha12.Controllers
             }
         }
 
+
+        [HttpPatch("{isbn}/pages")]
+        public async Task<IActionResult> PatchPagesAsync(string isbn, int pages)
+		{
+            await service.UpdateBookPagesAsync(isbn, pages);
+            return Ok();
+		}
+
+
         // DELETE api/<BooksController>/5
         [HttpDelete("{isbn}")]
-        public IActionResult Delete(string isbn)
+        public async Task<IActionResult> DeleteAsync(string isbn)
         {
-            var book = service.GetByISBN(isbn);
+            var book = await service.GetByISBNAsync(isbn);
 
             if (book is not null)
             {
-                service.DeleteByISBN(isbn);
+                await service.DeleteByISBNAsync(isbn);
                 return Ok();
             }
             else

@@ -68,7 +68,7 @@ namespace Ficha12WebApp.Controllers
         {
             if (ModelState.IsValid)
             {               
-                var newBook = service.Create(book);              
+                var newBook = service.CreateAsync(book);              
                 if(newBook is not null)
                     return RedirectToAction(nameof(Index));
                 else
@@ -85,7 +85,7 @@ namespace Ficha12WebApp.Controllers
             var book = service.GetByISBN(isbn);
             if(book is not null)
             {
-                service.DeleteByISBN(isbn);
+                service.DeleteByISBNAsync(isbn);
                 return RedirectToAction(nameof(Index));
             }
             else {

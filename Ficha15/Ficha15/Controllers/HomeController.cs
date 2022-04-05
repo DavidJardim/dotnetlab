@@ -45,6 +45,7 @@ namespace Ficha15.Controllers
             }
 
             string fileName = Path.GetFileName(file.FileName);
+
             using (FileStream stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
             {
                 file.CopyTo(stream);                

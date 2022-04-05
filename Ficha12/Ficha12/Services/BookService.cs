@@ -18,18 +18,24 @@ namespace Ficha12.Services
             return books;            
         }
 
-        public Book? GetByISBN(string isbn)
+        public async Task<Publisher> GetPublisherAsync(string isbn)
         {
-            var book = context.Books
+            var book = await GetByISBNAsync(isbn);
+            return book.Publisher;          
+        }
+
+        public async Task<Book>? GetByISBNAsync(string isbn)
+        {
+            var book = await context.Books
             .Include(b => b.Publisher)                
-            .SingleOrDefault(b => b.ISBN == isbn);
+            .SingleOrDefaultAsync(b => b.ISBN == isbn);
             return book;
         }
 
 
-        public Book Create(Book newBook)
+        public async Task<Book> CreateAsync(Book newBook)
         {
-            Publisher pub = context.Publishers.Find(newBook.Publisher.ID);
+            Publisher pub = await context.Publishers.FindAsync(newBook.Publisher.ID);                 
 
             if (pub is null)
             {
@@ -37,47 +43,47 @@ namespace Ficha12.Services
             }
             else
             {
-                newBook.Publisher = pub;
-                context.Books.Add(newBook);
-                context.SaveChanges();
+                newBook.Publisher = null;//pub;
+                await context.Books.AddAsync(newBook);
+                await context.SaveChangesAsync();
                 return newBook;
             }
         }
 
-        public void DeleteByISBN(string isbn)
+        public async Task DeleteByISBNAsync(string isbn)
         {
-            var bookToDelete = context.Books.Find(isbn);
+            var bookToDelete = await context.Books.FindAsync(isbn);
             if (bookToDelete is not null)
             {
                 context.Books.Remove(bookToDelete);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
 
-        public void Update(string isbn, Book book)
+        public async Task UpdateAsync(string isbn, Book book)
         {
-            var bookToUpdate = context.Books.Find(isbn);
+            var bookToUpdate = await context.Books.FindAsync(isbn);
             if (bookToUpdate is null)
             {
                 throw new NullReferenceException("Book does not exist");
             }
             else
             {
-                Publisher pub = context.Publishers.Find(book.Publisher.ID);
+                Publisher pub = await context.Publishers.FindAsync(book.Publisher.ID);
                 bookToUpdate.Title = book.Title;
                 bookToUpdate.Pages = book.Pages;
                 bookToUpdate.Publisher = pub;
                 bookToUpdate.Language = book.Language;
                 bookToUpdate.Author = book.Author;
 
-                context.SaveChanges();
+                context.SaveChangesAsync();
             }
         }
 
-        public void UpdatePublisher(string isbn, int publisherId)
+        public async Task UpdatePublisherAsync(string isbn, int publisherId)
         {
-            var bookToUpdate = context.Books.Find(isbn);
-            var publisherToUpdate = context.Publishers.Find(publisherId);
+            var bookToUpdate = await context.Books.FindAsync(isbn);
+            var publisherToUpdate = await context.Publishers.FindAsync(publisherId);
 
             if (bookToUpdate is null || publisherToUpdate is null)
             {
@@ -86,7 +92,14 @@ namespace Ficha12.Services
 
             bookToUpdate.Publisher = publisherToUpdate;
 
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
-    }
+
+		public async Task UpdateBookPagesAsync(string isbn, int pages)
+		{
+            var bookToUpdate = await context.Books.FindAsync(isbn);
+            bookToUpdate.Pages = pages;
+            await context.SaveChangesAsync();
+        }
+	}
 }

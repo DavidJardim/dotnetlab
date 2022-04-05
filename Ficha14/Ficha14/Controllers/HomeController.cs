@@ -25,6 +25,27 @@ namespace Ficha14.Controllers
             return View();
         }
 
+
+
+        /*public IActionResult Profile()
+        {
+            string token = HttpContext.Session.GetString("Token");
+
+            if( token == null)
+			{
+                return RedirectToAction(nameof(Index));
+            }
+			else
+			{
+                var id = tokenService.GetJWTTokenClaim(token);
+                var user = userService.GetById(id);
+                var userViewModel = new UserViewModel { Email = user.Email };
+			}
+
+            return View("Profile", userViewModel);
+        }*/
+
+
         [AllowAnonymous]
         [HttpPost]
         public IActionResult LogoutUser()

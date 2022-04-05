@@ -5,14 +5,15 @@ namespace Ficha12.Data
     public static class LibraryDbInitializer
     {
         public static void InsertData(LibraryContext context)
-        {
+        {        
             // Adds a publisher
             var publisher = new Publisher
             {
                 Name = "Mariner Books"
             };
+          
             context.Publishers.Add(publisher);
-
+                   
             // Adds some books
             context.Books.Add(new Book
             {

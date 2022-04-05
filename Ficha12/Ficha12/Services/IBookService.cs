@@ -4,15 +4,19 @@
     {
         public abstract IEnumerable<Book> GetAll();
 
-        public abstract Book? GetByISBN(string isbn);
+        public Task<Publisher> GetPublisherAsync(string isbn);
 
-        public abstract Book Create(Book newBook);
+        public Task<Book>? GetByISBNAsync(string isbn);
 
-        public abstract void DeleteByISBN(string isbn);
+        public Task<Book> CreateAsync(Book newBook);
 
-        public abstract void Update(string isbn, Book book);
+        public Task DeleteByISBNAsync(string isbn);
 
-        public abstract void UpdatePublisher(string isbn, int publisherId);
+        public Task UpdateAsync(string isbn, Book book);
+
+        public Task UpdatePublisherAsync(string isbn, int publisherId);
+
+        public Task UpdateBookPagesAsync(string isbn, int pages);
 
     }
 }
